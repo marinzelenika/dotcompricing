@@ -1,0 +1,31 @@
+{{ with resources.GetRemote
+$.Site.Params.url }} {{ with .Err }} {{ warnf "%s" . }} {{ else }} {{ with
+.Content }} {{ with transform.Unmarshal . }}
+
+
+{{ range . }}
+<h4>{{ .Name }}</h4>
+{{ $url1 := "https://purchase-api.dynabic.com/v1.2/productFamily/site-aspose/name-" }}
+{{ $ext := .Name }}
+{{ $entireUrl := print $url1 "" $ext}}
+{{ with resources.GetRemote $entireUrl }}
+
+
+
+{{ with .Err }} {{ warnf "%s" . }} {{ else }} {{ with
+.Content }} {{ with transform.Unmarshal . }}
+
+{{ range .Products }}
+
+<p>{{ .Name }}</p>
+
+{{ end }}
+
+{{ end }}{{ end }}{{ end }}{{ end }}
+
+
+{{ end }}{{ end }}{{ end }}{{ end }}{{ end }}
+
+
+
+

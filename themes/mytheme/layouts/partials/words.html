@@ -5,10 +5,8 @@ $.Site.Params.url }} {{ with .Err }} {{ warnf "%s" . }} {{ else }} {{ with
 
 {{ range . }}
 <h4>{{ .Name }}</h4>
-{{ $url1 := "https://purchase-api.dynabic.com/v1.2/productFamily/site-aspose/name-" }}
-{{ $ext := .Name }}
-{{ $entireUrl := print $url1 "" $ext}}
-{{ with resources.GetRemote $entireUrl }}
+{{ $url := print "https://purchase-api.dynabic.com/v1.2/productFamily/site-aspose/name-" "" .Name }}
+{{ with resources.GetRemote $url }}
 
 
 
@@ -18,6 +16,24 @@ $.Site.Params.url }} {{ with .Err }} {{ warnf "%s" . }} {{ else }} {{ with
 {{ range .Products }}
 
 <p>{{ .Name }}</p>
+
+{{ range .PricingPlans }}
+{{ if not (eq .DisplayOrder -1) }} 
+
+{{ range .PaymentScheduleList }}
+
+{{ .SubscriptionPeriodCharge }}
+
+
+
+{{ end }}
+
+
+
+
+{{ end }}
+
+{{ end }}
 
 {{ end }}
 

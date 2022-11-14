@@ -18,11 +18,19 @@ $.Site.Params.url }} {{ with .Err }} {{ warnf "%s" . }} {{ else }} {{ with
 <p>{{ .Name }}</p>
 
 {{ range .PricingPlans }}
-{{ if not (eq .DisplayOrder -1) }} 
+{{ $displayOrder := int .DisplayOrder }} 
+{{ if not (eq $displayOrder -1) }} 
+
 
 {{ range .PaymentScheduleList }}
+{{ $price := .SubscriptionPeriodCharge }}
 
-{{ .SubscriptionPeriodCharge }}
+{{ $price }}
+
+
+{{ end }}
+
+
 
 
 
@@ -31,7 +39,7 @@ $.Site.Params.url }} {{ with .Err }} {{ warnf "%s" . }} {{ else }} {{ with
 
 
 
-{{ end }}
+
 
 {{ end }}
 

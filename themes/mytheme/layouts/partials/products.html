@@ -14,38 +14,24 @@ $.Site.Params.url }} {{ with .Err }} {{ warnf "%s" . }} {{ else }} {{ with
 .Content }} {{ with transform.Unmarshal . }}
 
 {{ range .Products }}
+  <p>{{ .Name }}</p>
 
-<p>{{ .Name }}</p>
-
-{{ range .PricingPlans }}
-{{ $displayOrder := int .DisplayOrder }} 
-{{ if not (eq $displayOrder -1) }} 
-
-
-{{ range .PaymentScheduleList }}
-
-{{ .SubscriptionPeriodCharge }}
-
-
-
-
+  {{ range .PricingPlans }}
+    {{ $displayOrder := int .DisplayOrder }} 
+    {{ if not (lt $displayOrder 0) }} {{ if or (not (strings.Contains .Name "Metered")) }}
+      {{ $lowestCharge := 999999 }}
+      {{ range .PaymentScheduleList }}
+        {{ if lt .SubscriptionPeriodCharge $lowestCharge }}
+          {{ $lowestCharge = .SubscriptionPeriodCharge }}
+        {{ end }}
+      {{ end }}
+      <p>Lowest: {{ $lowestCharge }}</p>
+    {{ end }}
+  {{ end }}
 {{ end }}
-
-
-
-{{ end }}
-
-
-
-
-
-
-{{ end }}
-
 {{ end }}
 
 {{ end }}{{ end }}{{ end }}{{ end }}
-
 
 {{ end }}{{ end }}{{ end }}{{ end }}{{ end }}
 

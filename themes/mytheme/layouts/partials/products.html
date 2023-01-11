@@ -21,11 +21,16 @@ $.Site.Params.url }} {{ with .Err }} {{ warnf "%s" . }} {{ else }} {{ with
     {{ if not (lt $displayOrder 0) }} {{ if or (not (strings.Contains .Name "Metered")) }}
       {{ $lowestCharge := 999999 }}
       {{ range .PaymentScheduleList }}
-        {{ if lt .SubscriptionPeriodCharge $lowestCharge }}
-          {{ $lowestCharge = .SubscriptionPeriodCharge }}
+      {{ $charge := .SubscriptionPeriodCharge }}
+      {{ $charge := slice $charge }}
+      {{ $charge := sort $charge }}
+        {{ if lt $charge $lowestCharge }}
+          {{ $lowestCharge = $charge }}
         {{ end }}
       {{ end }}
+     
       <p>Lowest: {{ $lowestCharge }}</p>
+      
     {{ end }}
   {{ end }}
 {{ end }}

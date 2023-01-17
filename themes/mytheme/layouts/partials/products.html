@@ -22,15 +22,14 @@ $.Site.Params.url }} {{ with .Err }} {{ warnf "%s" . }} {{ else }} {{ with
       {{ $lowestCharge := 999999 }}
       {{ range .PaymentScheduleList }}
       {{ $charge := .SubscriptionPeriodCharge }}
-      {{ $charge := slice $charge }}
-      {{ $charge := sort $charge }}
+      {{ with sort (slice $charge) }}
         {{ if lt $charge $lowestCharge }}
           {{ $lowestCharge = $charge }}
         {{ end }}
       {{ end }}
      
       <p>Lowest: {{ $lowestCharge }}</p>
-      
+      {{ end }}
     {{ end }}
   {{ end }}
 {{ end }}

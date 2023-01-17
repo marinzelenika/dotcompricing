@@ -12,6 +12,10 @@
 
     {{ $style := resources.Get "sass/main.scss" | toCSS  $options | minify }}
     <link rel="stylesheet" href="{{ $style.RelPermalink }}" media="screen">
+
+    {{ $js := resources.Get "js/myjs.js" }}
+    <script src="{{ $js.RelPermalink }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
  
     <!-- 
         include a favicon for your site if you have it, else omit the line below 

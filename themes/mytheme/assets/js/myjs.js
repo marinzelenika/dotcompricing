@@ -5,9 +5,6 @@ fetch(
   .then((data) => {
     data.forEach((productFamily) => {
       let charges = "";
-      let productFamilyName = productFamily.Name;
-      document.getElementById("product-family-name").innerHTML =
-        productFamilyName + '<br>';
       fetch(
         "https://purchase-api.dynabic.com/v1.2/productFamily/site-aspose/name-" +
           productFamily.Name
@@ -15,12 +12,15 @@ fetch(
         .then((response) => response.json())
         .then((data) => {
           let productFamilyData = data.Products;
+          
           productFamilyData.forEach((product) => {
             product.PricingPlans.filter((plan) => plan.DisplayOrder > 0)
               .sort((a, b) => a.DisplayOrder - b.DisplayOrder)
               .forEach((plan) => {
                 plan.PaymentScheduleList.forEach((schedule) => {
-                  charges += schedule.SubscriptionPeriodCharge + '<br>';
+                    document.getElementById("product-names").innerHTML =
+                      data.Name;
+                  charges += schedule.SubscriptionPeriodCharge;
                 });
               });
             document.getElementById("product-pricing-plans").innerHTML +=

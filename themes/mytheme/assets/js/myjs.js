@@ -20,14 +20,14 @@ fetch(
                 plan.PaymentScheduleList.forEach((schedule) => {
                   charges += schedule.SubscriptionPeriodCharge + " ";
                 });
-              });
-            document.getElementById(
+              }); 
+             /* document.getElementById(
               "product-names"
-            ).innerHTML += `<h2>${productName}</h2>`;
+            ).innerHTML += `<h4>${productName}</h4>`; */
             document.getElementById(
               "product-pricing-plans"
-            ).innerHTML += `<p>${charges}</p>`;
-            charges = "";
+            ).innerHTML += `<h5>${productName}</h5><p>${charges}</p>`;
+            charges = ""; 
           });
         });
     });
